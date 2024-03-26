@@ -3,25 +3,34 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
+    "dev": "next dev",
+    "format": "prettier --write . --ignore-path .gitignore",
+    "lint": "SKIP_ENV_VALIDATION=1 next lint",
     "start": "next start",
-    "lint": "next lint"
+    "with-env": "npx dotenv -e .env.local --"
   },
   "dependencies": {
+    "@t3-oss/env-nextjs": "^0.9.2",
+    "framer-motion": "^11.0.21",
+    "next": "14.1.4",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.1.4"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
     "autoprefixer": "^10.0.1",
-    "postcss": "^8",
-    "tailwindcss": "^3.3.0",
     "eslint": "^8",
-    "eslint-config-next": "14.1.4"
+    "eslint-config-next": "14.1.4",
+    "eslint-config-prettier": "^9.1.0",
+    "postcss": "^8",
+    "prettier": "^3.2.5",
+    "sass": "^1.72.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
   }
 }
