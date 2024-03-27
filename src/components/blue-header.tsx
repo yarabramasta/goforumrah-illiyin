@@ -11,10 +11,11 @@ export default function BlueHeader() {
         <Link href="/" prefetch={false}>
           <div className="mr-2 flex aspect-video w-max max-w-[9.125rem] items-center justify-center">
             <Image
-              src="/logo.png"
+              src="/logo.svg"
               alt="GoForUmrah.com"
-              width={146}
-              height={26}
+              quality={100}
+              width={146 * 2}
+              height={26 * 2}
             />
           </div>
         </Link>
