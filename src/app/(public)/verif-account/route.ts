@@ -1,18 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 import { api } from '@/lib/api/client'
-import { auth } from '@/lib/auth'
 import { getBaseUrl } from '@/lib/utils'
 
 export const GET = async (request: NextRequest) => {
-  const session = await auth()
-
-  if (!session?.user) {
-    return NextResponse.redirect(getBaseUrl() + '/sign-in', {
-      status: 302
-    })
-  }
-
   // type=business-hotel&email=neyajam496@sentrau.com&code=s6t3VH1Q0Kz1ykwJQjYYtXNF3
   const type = request.nextUrl.searchParams.get('type')
   const email = request.nextUrl.searchParams.get('email')

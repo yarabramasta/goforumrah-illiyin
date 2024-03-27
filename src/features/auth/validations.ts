@@ -1,3 +1,4 @@
+import { isValidPhoneNumber } from 'react-phone-number-input'
 import { z } from 'zod'
 
 export const DefaultFormSchema = z.object({
@@ -7,7 +8,15 @@ export const DefaultFormSchema = z.object({
     .min(1, 'Email is required.')
 })
 
-export const ContactDetailsFormSchema = z.object({})
+export const ContactDetailsFormSchema = z.object({
+  firstname: z.string().min(1, 'First name is required.'),
+  lastname: z.string().min(1, 'Last name is required.'),
+  username: z.string().min(1, 'Username is required.'),
+  phone: z
+    .string()
+    .refine(isValidPhoneNumber, { message: 'Invalid phone number' })
+    .or(z.literal(''))
+})
 
 export const CreatePasswordFormSchema = z
   .object({

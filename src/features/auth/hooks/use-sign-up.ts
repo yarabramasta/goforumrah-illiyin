@@ -1,3 +1,5 @@
+// I SHOULD USE "Jotai" or "Zustand" LMAO
+
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'

@@ -77,7 +77,7 @@ async function signUp(data: {
   const res = await api<ApiResponse<SignUpResponseData>>('/store', {
     ...contactDetails,
     // status (0 = need verification, 1 = verified)
-    // production should be 1 becuase response from email:
+    // production should be 1 because response from email:
     // http://localhost:3000/verif-account?type=business-hotel&email=neyajam496@sentrau.com&code=s6t3VH1Q0Kz1ykwJQjYYtXNF3
     status: process.env.NODE_ENV === 'production' ? 1 : 0,
     soft_delete: 0,
@@ -91,7 +91,17 @@ async function signUp(data: {
     )
   }
 
-  return serializeUser(res.data!)
+  const user =
+    typeof res.data === 'string'
+      ? res.data
+      : {
+          id_hotel_business: 1,
+          email: data.email,
+          firstname: contactDetails.firstname,
+          lastname: contactDetails.lastname
+        }
+
+  return serializeUser(user)
 }
 
 async function signIn(data: { email: string; password: string }) {

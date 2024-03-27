@@ -56,7 +56,7 @@ export function useAuth(type: 'sign-in' | 'sign-up') {
               process.env.NODE_ENV === 'production'
                 ? '/dashboard'
                 : type === 'sign-up'
-                  ? `/auth/verify?email=${email}`
+                  ? `/callback/verify-email?email=${email}`
                   : '/dashboard'
 
             router.push(redirectUrl)

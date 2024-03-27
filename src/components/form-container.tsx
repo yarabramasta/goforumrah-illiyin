@@ -48,9 +48,9 @@ export default function FormContainer({
       <p className="pb-8 pl-4 text-[#616161]">
         {description ?? 'Create an account to list and manage your property.'}
       </p>
-      <div className="h-full w-full flex-1 pb-8 pl-4">
-        {children}
-        <div className="pt-8 text-center text-sm text-[#616161]">
+      <div className="w-full pl-4">{children}</div>
+      <div className="mt-8 w-full pl-4">
+        <p className="mx-auto text-center text-sm text-[#616161]">
           By signing in or creating an account, you agree with our{' '}
           <Link className="text-primary hover:underline" href="#">
             Terms & Conditions
@@ -59,8 +59,11 @@ export default function FormContainer({
           <Link className="text-primary hover:underline" href="#">
             Privacy statement
           </Link>
-        </div>
+        </p>
       </div>
+      <footer className="mt-20 w-full pl-4 text-sm text-[#9E9E9E]">
+        All rights reserved. Copyright 2022 - GoForUmrah.com&trade;
+      </footer>
     </>
   )
 }

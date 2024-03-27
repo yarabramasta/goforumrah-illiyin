@@ -8,9 +8,20 @@ export default function SignIn({
 }: {
   searchParams?: Readonly<Record<string, string | null | undefined>>
 }) {
+  const title = searchParams?.step
+    ? searchParams?.step === 'contact_details'
+      ? 'Contact details'
+      : 'Create password'
+    : 'Create your partner account'
+
   return (
     <FormContainer
-      title="Create your partner account"
+      title={title}
+      description={
+        searchParams?.step === 'create_password'
+          ? 'Use a minimum of 10 characters, including uppercase letters, lowercase letters and numbers.'
+          : 'Create an account to list and manage your property.'
+      }
       backUrl={searchParams?.step ? '/sign-up' : undefined}
     >
       {!searchParams?.step && <DefaultAuthForm type="sign-up" />}

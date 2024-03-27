@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Link } from 'lucide-react'
+import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
