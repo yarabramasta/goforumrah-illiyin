@@ -44,10 +44,8 @@ export function useAuth(type: 'sign-in' | 'sign-up') {
         {
           loading: 'Logging in...',
           success(data) {
-            if (!!data?.ok) {
-              toast.error(
-                'Oops!!! an error has occurred. Please check your credentials and try again.'
-              )
+            if (data?.error) {
+              toast.error('Please check your email or password and try again.')
               router.push(`/${type}?error=auth_error`)
               return
             }
@@ -64,8 +62,8 @@ export function useAuth(type: 'sign-in' | 'sign-up') {
             return 'Logged in successfully.'
           },
           error(_error) {
-            router.push(`/${type}?error=auth_error`)
-            return 'Oops!!! an error has occurred. Please check your credentials and try again.'
+            router.push(`/${type}?error=unknown_error`)
+            return 'Oops!!! an error has occurred. Please try again.'
           },
           finally() {
             setEmail(null)

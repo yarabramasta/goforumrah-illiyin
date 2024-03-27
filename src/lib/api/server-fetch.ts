@@ -9,12 +9,16 @@ export async function serverFetch<T extends ApiResponse>(
   data: Record<string, unknown>,
   headers?: Record<string, string>
 ): Promise<T> {
+  const { Authorization, ...restHeaders } = headers ?? {
+    Authorization: cookies().get('x-access-token')?.value ?? ''
+  }
+
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: cookies().get('x-access-token')?.value ?? '',
-      ...headers
+      Authorization,
+      ...restHeaders
     },
     body: JSON.stringify(data)
   }).then(res => res.json())

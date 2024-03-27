@@ -1,3 +1,6 @@
+// please check lucia auth rather than next-auth@5 or just implement custom auth with Jotai / Zustand
+// also, sometimes it is better to use auth entirely on the nextjs side rather than on server(api) side
+
 import NextAuth, { CredentialsSignin } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { cookies } from 'next/headers'
@@ -112,7 +115,9 @@ async function signIn(data: { email: string; password: string }) {
     password: data.password
   })
 
-  cookies().set('x-access-token', res.data!.token)
+  if (res.data?.token) {
+    cookies().set('x-access-token', res.data.token)
+  }
 
   if (!res.success) {
     throw new CustomError(
