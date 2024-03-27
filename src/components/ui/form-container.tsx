@@ -42,7 +42,7 @@ export default function FormContainer({
           </Link>
         </Button>
       )}
-      <h1 className="pb-[0.75rem] pl-4 text-3xl font-bold text-[#1B1B1B]">
+      <h1 className="pb-[0.75rem] pl-4 text-3xl font-semibold text-[#1B1B1B]">
         {title}
       </h1>
       <p className="pb-8 pl-4 text-[#616161]">
