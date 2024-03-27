@@ -6,9 +6,8 @@
     "build": "next build",
     "dev": "next dev",
     "format": "prettier --write . --ignore-path .gitignore",
-    "lint": "SKIP_ENV_VALIDATION=1 next lint",
-    "start": "next start",
-    "with-env": "npx dotenv -e .env.local --"
+    "lint": "next lint",
+    "start": "next start"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -32,6 +31,7 @@
     "sonner": "^1.4.41",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
+    "usehooks-ts": "^3.0.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {

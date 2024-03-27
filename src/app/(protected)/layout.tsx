@@ -7,8 +7,8 @@ export default async function PublicLayout({
 }: React.PropsWithChildren) {
   const user = await auth()
 
-  if (user) {
-    redirect('/dashboard')
+  if (!user) {
+    redirect('/sign-in')
   }
 
   return <div className="h-dvh w-screen overflow-x-hidden">{children}</div>
