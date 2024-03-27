@@ -7,7 +7,7 @@ import { Button } from './ui/button'
 export default function BlueHeader() {
   return (
     <header className="fixed inset-x-0 top-0 z-[999] h-20 w-full bg-[#052C47]">
-      <div className="container relative flex h-full items-center justify-between px-[4.5rem] py-[1.25rem]">
+      <div className="container relative flex h-full items-center justify-between px-8 py-[1.25rem] md:px-[4.5rem]">
         <Link href="/" prefetch={false}>
           <div className="mr-2 flex aspect-video w-max max-w-[9.125rem] items-center justify-center">
             <Image
