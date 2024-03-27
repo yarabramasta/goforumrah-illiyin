@@ -23,7 +23,7 @@ export function useResetPassword() {
         {
           loading: 'Sending reset password link...',
           success(_) {
-            router.push('/callback/reset-password')
+            router.push(`/callback/reset-password?email=${data.email}`)
             return 'Check your email for the verification link.'
           },
           error(_) {

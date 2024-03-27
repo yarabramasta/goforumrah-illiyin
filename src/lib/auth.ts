@@ -1,5 +1,5 @@
-// please check lucia auth rather than next-auth@5 or just implement custom auth with Jotai / Zustand
-// also, sometimes it is better to use auth entirely on the nextjs side rather than on server(api) side
+// please check lucia auth rather than next-auth@5 or just implement custom auth with Jotai / Zustand combo with react-query
+// also, sometimes it is better to use auth entirely on the nextjs side rather than on server(ur backend) side
 
 import NextAuth, { CredentialsSignin } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
