@@ -1,4 +1,4 @@
-import FormContainer from '@/components/ui/form-container'
+import FormContainer from '@/components/form-container'
 import ContactDetailsForm from '@/features/auth/components/form-contact-details'
 import CreatePasswordForm from '@/features/auth/components/form-create-password'
 import DefaultAuthForm from '@/features/auth/components/form-default'

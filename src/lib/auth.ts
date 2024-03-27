@@ -1,10 +1,12 @@
 import NextAuth, { CredentialsSignin } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import { cookies } from 'next/headers'
 import { z } from 'zod'
 
 import { ContactDetailsFormSchema } from '@/features/auth/validations'
 
 import { api } from './api/client'
+import { ApiResponse, SignUpResponseData } from './api/types'
 
 export const {
   handlers: { GET, POST },
@@ -14,35 +16,55 @@ export const {
   providers: [
     CredentialsProvider({
       credentials: {
-        email: { label: 'Email', type: 'email', required: true },
-        password: { label: 'Password', type: 'password', required: false },
-        contactDetails: {
-          label: 'Contact Details',
-          type: 'object',
-          required: false
+        email: {
+          label: 'Email',
+          type: 'email',
+          name: 'email',
+          id: 'email',
+          required: true
+        },
+        password: {
+          label: 'Password',
+          name: 'password',
+          id: 'password',
+          type: 'password',
+          required: true
         }
       },
       async authorize(credentials) {
         const data = credentials as unknown as {
           email: string
-          password?: string
+          password: string
           contactDetails?: z.infer<typeof ContactDetailsFormSchema>
         }
 
         return data.contactDetails
           ? signUp(data as Required<typeof data>)
-          : signIn(data.email, data.password!)
+          : signIn(data as Required<Omit<typeof data, 'contactDetails'>>)
       }
     })
   ]
 })
 
-class AuthError extends CredentialsSignin {
+class CustomError extends CredentialsSignin {
   public readonly code: string
 
   constructor(message: string, code?: string) {
     super(message)
     this.code = code ?? 'auth_error'
+  }
+}
+
+function serializeUser(
+  user: Pick<
+    SignUpResponseData,
+    'email' | 'firstname' | 'lastname' | 'id_hotel_business'
+  >
+) {
+  return {
+    id: String(user.id_hotel_business),
+    email: user.email,
+    name: `${user.firstname} ${user.lastname}`
   }
 }
 
@@ -52,7 +74,7 @@ async function signUp(data: {
   contactDetails: z.infer<typeof ContactDetailsFormSchema>
 }) {
   const { contactDetails, ...rest } = data
-  const res = await api('/store', {
+  const res = await api<ApiResponse<SignUpResponseData>>('/store', {
     ...contactDetails,
     // status (0 = need verification, 1 = verified)
     // production should be 1 becuase response from email:
@@ -63,25 +85,45 @@ async function signUp(data: {
   })
 
   if (!res.success) {
-    throw new AuthError(
+    throw new CustomError(
       (res.errors as string) ?? 'Failed to send verification email.',
       'verification_email_error'
     )
   }
 
-  return { email: data.email, id: '1' }
+  return serializeUser(res.data!)
 }
 
-async function signIn(email: string, password: string) {
-  const res = await api('/login', { email, password })
+async function signIn(data: { email: string; password: string }) {
+  const res = await api<
+    ApiResponse<{ email: string; id: number; token: string }>
+  >('/login', {
+    email: data.email,
+    password: data.password
+  })
+
+  cookies().set('x-access-token', res.data!.token)
 
   if (!res.success) {
-    throw new AuthError(
+    throw new CustomError(
       (res.errors as string) ??
         'Login failed. Please check your email and password.',
       'login_error'
     )
   }
 
-  return { email, id: '1' }
+  const user = await api<
+    ApiResponse<
+      Pick<
+        SignUpResponseData,
+        'email' | 'firstname' | 'lastname' | 'id_hotel_business'
+      >
+    >
+  >(
+    '/show',
+    { id_hotel_business: res.data?.id },
+    { Authorization: res.data!.token }
+  )
+
+  return serializeUser(user.data!)
 }

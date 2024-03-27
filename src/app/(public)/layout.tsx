@@ -5,9 +5,9 @@ import { auth } from '@/lib/auth'
 export default async function PublicLayout({
   children
 }: React.PropsWithChildren) {
-  const user = await auth()
+  const session = await auth()
 
-  if (user) {
+  if (session?.user) {
     redirect('/dashboard')
   }
 

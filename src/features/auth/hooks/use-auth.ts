@@ -9,12 +9,7 @@ import { toast } from 'sonner'
 import { useLocalStorage } from 'usehooks-ts'
 import { z } from 'zod'
 
-import {
-  ContactDetailsFormSchema,
-  CreatePasswordFormSchema,
-  DefaultFormSchema,
-  EnterPasswordFormSchema
-} from '../validations'
+import { ContactDetailsFormSchema, DefaultFormSchema } from '../validations'
 
 export function useAuth(type: 'sign-in' | 'sign-up') {
   const [loading, setLoading] = useState(false)
@@ -28,34 +23,32 @@ export function useAuth(type: 'sign-in' | 'sign-up') {
     typeof ContactDetailsFormSchema
   > | null>('data_form_step_contact_details', null)
 
+  const form = useForm<z.infer<typeof DefaultFormSchema>>({
+    resolver: zodResolver(DefaultFormSchema),
+    defaultValues: {
+      email: ''
+    }
+  })
+
   const handler = useCallback(
-    (
-      data: typeof type extends 'sign-in'
-        ? z.infer<typeof EnterPasswordFormSchema>
-        : z.infer<typeof CreatePasswordFormSchema>,
-      callback?: () => Promise<void>
-    ) => {
+    (data: { password: string; confirmPassword?: string }) => {
       setLoading(true)
 
       toast.promise(
-        async () => {
-          const [res] = await Promise.all([
-            signIn('credentials', {
-              email,
-              contactDetails,
-              password: type === 'sign-up' ? undefined : data.password,
-              redirect: false
-            }),
-            callback?.()
-          ])
-
-          return res
-        },
+        signIn('credentials', {
+          email,
+          ...(contactDetails ? { contactDetails } : undefined),
+          password: data.password,
+          redirect: false
+        }),
         {
           loading: 'Logging in...',
           success(data) {
             if (!!data?.ok) {
-              toast.error(data.error)
+              toast.error(
+                'Oops!!! an error has occurred. Please check your credentials and try again.'
+              )
+              router.push(`/${type}?error=auth_error`)
               return
             }
 
@@ -63,28 +56,27 @@ export function useAuth(type: 'sign-in' | 'sign-up') {
               process.env.NODE_ENV === 'production'
                 ? '/dashboard'
                 : type === 'sign-up'
-                  ? '/verify-email'
+                  ? `/auth/verify?email=${email}`
                   : '/dashboard'
 
             router.push(redirectUrl)
 
             return 'Logged in successfully.'
           },
-          error(error) {
-            return (
-              error.message ?? 'Authentication failed, an error has occurred.'
-            )
+          error(_error) {
+            router.push(`/${type}?error=auth_error`)
+            return 'Oops!!! an error has occurred. Please check your credentials and try again.'
           },
           finally() {
             setEmail(null)
             setContactDetails(null)
+            form.reset()
             setLoading(false)
           }
         }
       )
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [email, contactDetails, type, router, setEmail, setContactDetails, form]
   )
 
   const handleInitialStep = useCallback(
@@ -96,13 +88,6 @@ export function useAuth(type: 'sign-in' | 'sign-up') {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [type]
   )
-
-  const form = useForm<z.infer<typeof DefaultFormSchema>>({
-    resolver: zodResolver(DefaultFormSchema),
-    defaultValues: {
-      email: ''
-    }
-  })
 
   return { loading, authenticate: handler, handleInitialStep, form }
 }

@@ -1,4 +1,4 @@
-import FormContainer from '@/components/ui/form-container'
+import FormContainer from '@/components/form-container'
 import DefaultAuthForm from '@/features/auth/components/form-default'
 import EnterPasswordForm from '@/features/auth/components/form-enter-password'
 

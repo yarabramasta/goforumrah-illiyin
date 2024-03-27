@@ -4,7 +4,7 @@ import { ChevronLeftIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 import { useLocalStorage } from 'usehooks-ts'
 
-import { Button } from './button'
+import { Button } from './ui/button'
 
 export default function FormContainer({
   children,
