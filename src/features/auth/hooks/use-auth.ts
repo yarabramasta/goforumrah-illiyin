@@ -37,17 +37,31 @@ export function useAuth(type: 'sign-in' | 'sign-up') {
       toast.promise(
         signIn('credentials', {
           email,
-          ...(contactDetails ? { contactDetails } : undefined),
+          ...(contactDetails
+            ? { contactDetails: JSON.stringify(contactDetails) }
+            : undefined),
           password: data.password,
           redirect: false
         }),
         {
-          loading: 'Logging in...',
+          loading:
+            type === 'sign-up'
+              ? 'Creating your account...'
+              : 'Logging you in...',
           success(data) {
             if (data?.error) {
-              toast.error('Please check your email or password and try again.')
-              router.push(`/${type}?error=auth_error`)
-              return
+              // toast.error(
+              //   type === 'sign-up'
+              //     ? 'Email already exists. Please try again.'
+              //     : 'Email or password is incorrect. Please try again.'
+              // )
+              // router.push(`/${type}?error=auth_error`)
+              throw new Error(
+                type === 'sign-up'
+                  ? 'Email or username already exists. Please try again.'
+                  : 'Email or password is incorrect. Please try again.'
+              )
+              // return
             }
 
             const redirectUrl =
@@ -59,11 +73,16 @@ export function useAuth(type: 'sign-in' | 'sign-up') {
 
             router.push(redirectUrl)
 
-            return 'Logged in successfully.'
+            return type === 'sign-up'
+              ? 'Account created successfully. Please check your email to verify your account.'
+              : 'Logged in successfully.'
           },
-          error(_error) {
-            router.push(`/${type}?error=unknown_error`)
-            return 'Oops!!! an error has occurred. Please try again.'
+          error(error) {
+            router.push(`/${type}?error=auth_error`)
+            return (
+              error.message ??
+              'Oops!!! an error has occurred. Please try again.'
+            )
           },
           finally() {
             setEmail(null)

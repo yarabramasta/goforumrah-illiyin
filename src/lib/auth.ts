@@ -4,9 +4,8 @@
 import NextAuth, { CredentialsSignin } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { cookies } from 'next/headers'
-import { z } from 'zod'
 
-import { ContactDetailsFormSchema } from '@/features/auth/validations'
+// import { ContactDetailsFormSchema } from '@/features/auth/validations'
 
 import { serverFetch } from './api/server-fetch'
 import { ApiResponse, SignUpResponseData } from './api/types'
@@ -38,7 +37,7 @@ export const {
         const data = credentials as unknown as {
           email: string
           password: string
-          contactDetails?: z.infer<typeof ContactDetailsFormSchema>
+          contactDetails?: string
         }
 
         return data.contactDetails
@@ -49,6 +48,8 @@ export const {
   ]
 })
 
+// even tho CredentialsSignin accept message, there is no way passing that message into client or as a response, so i handled it with custom message
+// see src/features/auth/hooks/use-auth.ts L54
 class CustomError extends CredentialsSignin {
   public readonly code: string
 
@@ -74,17 +75,19 @@ function serializeUser(
 async function signUp(data: {
   email: string
   password: string
-  contactDetails: z.infer<typeof ContactDetailsFormSchema>
+  contactDetails: string
 }) {
   const { contactDetails, ...rest } = data
+  const parsedContactDetails = JSON.parse(contactDetails)
+
   const res = await serverFetch<ApiResponse<SignUpResponseData>>('/store', {
-    ...contactDetails,
+    ...parsedContactDetails,
+    ...rest,
     // status (0 = need verification, 1 = verified)
     // production should be 1 because response from email:
     // http://localhost:3000/verif-account?type=business-hotel&email=neyajam496@sentrau.com&code=s6t3VH1Q0Kz1ykwJQjYYtXNF3
     status: process.env.NODE_ENV === 'production' ? 1 : 0,
-    soft_delete: 0,
-    rest
+    soft_delete: 0
   })
 
   if (!res.success) {
@@ -100,8 +103,8 @@ async function signUp(data: {
       : {
           id_hotel_business: 1,
           email: data.email,
-          firstname: contactDetails.firstname,
-          lastname: contactDetails.lastname
+          firstname: parsedContactDetails.firstname,
+          lastname: parsedContactDetails.lastname
         }
 
   return serializeUser(user)

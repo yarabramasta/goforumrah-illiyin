@@ -1,5 +1,3 @@
-import 'server-only'
-
 import { cookies } from 'next/headers'
 
 import { ApiResponse } from './types'
@@ -20,7 +18,8 @@ export async function serverFetch<T extends ApiResponse>(
       Authorization,
       ...restHeaders
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
+    cache: 'no-store'
   }).then(res => res.json())
 
   return response

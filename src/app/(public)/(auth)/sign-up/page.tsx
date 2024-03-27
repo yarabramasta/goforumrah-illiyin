@@ -11,22 +11,31 @@ export default function SignIn({
   const title = searchParams?.step
     ? searchParams?.step === 'contact_details'
       ? 'Contact details'
-      : 'Create password'
+      : searchParams?.reset
+        ? 'Forgot your password?'
+        : 'Create password'
     : 'Create your partner account'
+
+  const description =
+    searchParams?.step === 'create_password'
+      ? searchParams?.reset
+        ? "Confirm your username and we'll send you a link to reset your password."
+        : 'Use a minimum of 10 characters, including uppercase letters, lowercase letters and numbers.'
+      : 'Create an account to list and manage your property.'
 
   return (
     <FormContainer
       title={title}
-      description={
-        searchParams?.step === 'create_password'
-          ? 'Use a minimum of 10 characters, including uppercase letters, lowercase letters and numbers.'
-          : 'Create an account to list and manage your property.'
-      }
+      description={description}
       backUrl={searchParams?.step ? '/sign-up' : undefined}
     >
       {!searchParams?.step && <DefaultAuthForm type="sign-up" />}
       {searchParams?.step === 'contact_details' && <ContactDetailsForm />}
-      {searchParams?.step === 'create_password' && <CreatePasswordForm />}
+      {searchParams?.step === 'create_password' && (
+        <CreatePasswordForm
+          type={searchParams?.reset ? 'reset-password' : 'create-password'}
+        />
+      )}
     </FormContainer>
   )
 }

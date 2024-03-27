@@ -9,7 +9,7 @@ export interface SignUpResponseData {
   status: number
   email_code: string
   phone_code: string | null
-  forgot_password: string
+  forgot_password: string | null
   soft_delete: number
   created_at: Date
   updated_at: Date
