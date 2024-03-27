@@ -5,7 +5,7 @@ import { z } from 'zod'
 
 import { ContactDetailsFormSchema } from '@/features/auth/validations'
 
-import { api } from './api/client'
+import { serverFetch } from './api/server-fetch'
 import { ApiResponse, SignUpResponseData } from './api/types'
 
 export const {
@@ -74,7 +74,7 @@ async function signUp(data: {
   contactDetails: z.infer<typeof ContactDetailsFormSchema>
 }) {
   const { contactDetails, ...rest } = data
-  const res = await api<ApiResponse<SignUpResponseData>>('/store', {
+  const res = await serverFetch<ApiResponse<SignUpResponseData>>('/store', {
     ...contactDetails,
     // status (0 = need verification, 1 = verified)
     // production should be 1 because response from email:
@@ -105,7 +105,7 @@ async function signUp(data: {
 }
 
 async function signIn(data: { email: string; password: string }) {
-  const res = await api<
+  const res = await serverFetch<
     ApiResponse<{ email: string; id: number; token: string }>
   >('/login', {
     email: data.email,
@@ -122,7 +122,7 @@ async function signIn(data: { email: string; password: string }) {
     )
   }
 
-  const user = await api<
+  const user = await serverFetch<
     ApiResponse<
       Pick<
         SignUpResponseData,

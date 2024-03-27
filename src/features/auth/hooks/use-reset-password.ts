@@ -5,7 +5,7 @@ import { useCallback, useState } from 'react'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { api } from '@/lib/api/client'
+import { clientFetch } from '@/lib/api/client-fetch'
 import { ApiResponse } from '@/lib/api/types'
 
 import { CreatePasswordFormSchema, DefaultFormSchema } from '../validations'
@@ -19,7 +19,7 @@ export function useResetPassword() {
     async (data: z.infer<typeof DefaultFormSchema>) => {
       setLoading(true)
       toast.promise(
-        api<ApiResponse<string>>('/forgot-password/request', data),
+        clientFetch<ApiResponse<string>>('/forgot-password/request', data),
         {
           loading: 'Sending reset password link...',
           success(_) {
@@ -42,7 +42,7 @@ export function useResetPassword() {
   const submitNewPassword = useCallback(
     async (data: z.infer<typeof CreatePasswordFormSchema>) => {
       toast.promise(
-        api<ApiResponse<string>>(`/forgot-password/submit`, {
+        clientFetch<ApiResponse<string>>(`/forgot-password/submit`, {
           email: searchParams.get('email'),
           code: searchParams.get('code'),
           new_password: data.password

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-import { api } from '@/lib/api/client'
+import { serverFetch } from '@/lib/api/server-fetch'
 import { getBaseUrl } from '@/lib/utils'
 
 export const GET = async (request: NextRequest) => {
@@ -19,7 +19,7 @@ export const GET = async (request: NextRequest) => {
     )
   }
 
-  const res = await api(`/email-verification/verify`, { email, code })
+  const res = await serverFetch(`/email-verification/verify`, { email, code })
 
   if (!res.success) {
     return NextResponse.json(

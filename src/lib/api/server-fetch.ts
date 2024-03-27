@@ -1,8 +1,10 @@
+import 'server-only'
+
 import { cookies } from 'next/headers'
 
 import { ApiResponse } from './types'
 
-export async function api<T extends ApiResponse>(
+export async function serverFetch<T extends ApiResponse>(
   url: string,
   data: Record<string, unknown>,
   headers?: Record<string, string>

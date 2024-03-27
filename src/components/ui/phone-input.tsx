@@ -1,3 +1,5 @@
+'use client'
+
 import { CheckIcon, ChevronsUpDown } from 'lucide-react'
 import * as React from 'react'
 import * as RPNInput from 'react-phone-number-input'
@@ -58,7 +60,7 @@ PhoneInput.displayName = 'PhoneInput'
 const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, ...props }, ref) => (
     <Input
-      className={cn('rounded-s-none rounded-e-lg', className)}
+      className={cn('rounded-e-lg rounded-s-none', className)}
       {...props}
       ref={ref}
     />
@@ -94,7 +96,7 @@ const CountrySelect = ({
         <Button
           type="button"
           variant={'outline'}
-          className={cn('flex gap-1 rounded-e-none rounded-s-lg pr-1 pl-3')}
+          className={cn('flex gap-1 rounded-e-none rounded-s-lg pl-3 pr-1')}
           disabled={disabled}
         >
           <FlagComponent country={value} countryName={value} />
@@ -106,7 +108,7 @@ const CountrySelect = ({
           />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="p-0 w-[300px]">
+      <PopoverContent className="w-[300px] p-0">
         <Command>
           <CommandList>
             <CommandInput placeholder="Search country..." />
@@ -124,7 +126,7 @@ const CountrySelect = ({
                       country={option.value}
                       countryName={option.label}
                     />
-                    <span className="text-sm flex-1">{option.label}</span>
+                    <span className="flex-1 text-sm">{option.label}</span>
                     {option.value && (
                       <span className="text-sm text-foreground/50">
                         {`+${RPNInput.getCountryCallingCode(option.value)}`}
