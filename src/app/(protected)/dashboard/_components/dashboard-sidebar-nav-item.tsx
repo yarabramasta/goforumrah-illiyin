@@ -35,7 +35,7 @@ export default function DashboardSidebarNavItem(
       disabled={props.disabled ?? false}
       asChild
     >
-      <Link href={props.href} prefetch={false}>
+      <Link href={props.href} prefetch={false} onClick={(event) => { if (props.disabled) { event.preventDefault() } }}>
         {props.icon}
         {props.title}
       </Link>
