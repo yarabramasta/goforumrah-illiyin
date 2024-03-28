@@ -2,11 +2,17 @@ import './globals.css'
 
 import type { Metadata } from 'next'
 import { CookiesProvider } from 'next-client-cookies/server'
+import localFont from 'next/font/local'
 
-import NextAuthProvider from '@/components/next-auth-provider'
+import NextAuthProvider from '@/components/auth/next-auth-provider'
 import { Toaster } from '@/components/ui/sonner'
-import { generalSans } from '@/fonts'
 import { auth } from '@/lib/auth'
+
+const generalSans = localFont({
+  src: './GeneralSans-Variable.woff2',
+  display: 'swap',
+  variable: '--font-sans'
+})
 
 export const metadata: Metadata = { title: 'Go for Umrah' }
 

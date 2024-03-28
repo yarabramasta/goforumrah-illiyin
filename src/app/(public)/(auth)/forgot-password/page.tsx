@@ -1,5 +1,5 @@
-import FormContainer from '@/components/form-container'
-import ForgotPasswordForm from '@/features/auth/components/form-forgot-password'
+import FormContainer from '@/components/auth/form-container'
+import ForgotPasswordForm from '@/components/auth/form-forgot-password'
 
 export default function ForgotPassword() {
   return (

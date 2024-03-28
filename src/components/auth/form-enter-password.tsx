@@ -15,9 +15,8 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-
-import { useAuth } from '../hooks/use-auth'
-import { EnterPasswordFormSchema } from '../validations'
+import { useAuth } from '@/lib/auth/use-auth'
+import { EnterPasswordFormSchema } from '@/lib/auth/validations'
 
 export default function EnterPasswordForm() {
   const { loading, authenticate } = useAuth('sign-in')

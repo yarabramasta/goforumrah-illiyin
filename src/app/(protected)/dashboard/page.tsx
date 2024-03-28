@@ -3,12 +3,12 @@ import { Bell } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import AccountDropdown from '@/components/dashboard/account-dropdown'
+import DashboardContent from '@/components/dashboard/dashboard-content'
+import Drawer from '@/components/dashboard/drawer'
+import Sidebar from '@/components/dashboard/sidebar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import AccountDropdown from '@/features/dashboard/components/account-dropdown'
-import DashboardContent from '@/features/dashboard/components/dashboard-content'
-import Drawer from '@/features/dashboard/components/drawer'
-import Sidebar from '@/features/dashboard/components/sidebar'
 import { cn } from '@/lib/utils'
 
 export default function Dashboard() {

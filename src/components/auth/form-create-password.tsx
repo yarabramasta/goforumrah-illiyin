@@ -10,10 +10,9 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-
-import { useAuth } from '../hooks/use-auth'
-import { useResetPassword } from '../hooks/use-reset-password'
-import { useSignUp } from '../hooks/use-sign-up'
+import { useAuth } from '@/lib/auth/use-auth'
+import { useResetPassword } from '@/lib/auth/use-reset-password'
+import { useSignUp } from '@/lib/auth/use-sign-up'
 
 export default function CreatePasswordForm(
   {

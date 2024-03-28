@@ -9,11 +9,11 @@ import { useForm } from 'react-hook-form'
 import { useLocalStorage } from 'usehooks-ts'
 import { z } from 'zod'
 
+import { useAuth } from './use-auth'
 import {
   ContactDetailsFormSchema,
   CreatePasswordFormSchema
-} from '../validations'
-import { useAuth } from './use-auth'
+} from './validations'
 
 export function useSignUp() {
   const router = useRouter()

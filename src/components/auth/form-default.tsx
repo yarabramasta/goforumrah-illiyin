@@ -12,8 +12,7 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-
-import { useAuth } from '../hooks/use-auth'
+import { useAuth } from '@/lib/auth/use-auth'
 
 export default function DefaultAuthForm({
   type

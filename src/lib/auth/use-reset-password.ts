@@ -9,7 +9,7 @@ import { z } from 'zod'
 import { clientFetch } from '@/lib/api/client-fetch'
 import { ApiResponse } from '@/lib/api/types'
 
-import { CreatePasswordFormSchema, DefaultFormSchema } from '../validations'
+import { CreatePasswordFormSchema, DefaultFormSchema } from './validations'
 
 export function useResetPassword() {
   const [loading, setLoading] = useState(false)

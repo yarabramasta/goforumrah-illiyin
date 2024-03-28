@@ -11,8 +11,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { PhoneInput } from '@/components/ui/phone-input'
-
-import { useSignUp } from '../hooks/use-sign-up'
+import { useSignUp } from '@/lib/auth/use-sign-up'
 
 export default function ContactDetailsForm() {
   const {

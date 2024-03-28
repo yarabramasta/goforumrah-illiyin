@@ -14,9 +14,8 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-
-import { useResetPassword } from '../hooks/use-reset-password'
-import { DefaultFormSchema } from '../validations'
+import { useResetPassword } from '@/lib/auth/use-reset-password'
+import { DefaultFormSchema } from '@/lib/auth/validations'
 
 export default function ForgotPasswordForm() {
   const { loading, sendResetPasswordLink } = useResetPassword()

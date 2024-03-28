@@ -6,10 +6,10 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import { cookies } from 'next/headers'
 import { z } from 'zod'
 
-import { ContactDetailsFormSchema } from '@/features/auth/validations'
+import { type ContactDetailsFormSchema } from '@/lib/auth/validations'
 
-import { serverFetch } from './api/server-fetch'
-import { ApiResponse, SignUpResponseData } from './api/types'
+import { serverFetch } from '../api/server-fetch'
+import { ApiResponse, SignUpResponseData } from '../api/types'
 
 export const {
   handlers: { GET, POST },

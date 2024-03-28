@@ -9,7 +9,7 @@ import { toast } from 'sonner'
 import { useLocalStorage } from 'usehooks-ts'
 import { z } from 'zod'
 
-import { ContactDetailsFormSchema, DefaultFormSchema } from '../validations'
+import { ContactDetailsFormSchema, DefaultFormSchema } from './validations'
 
 export function useAuth(type: 'sign-in' | 'sign-up') {
   const [loading, setLoading] = useState(false)
