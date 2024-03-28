@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import { CookiesProvider } from 'next-client-cookies/server'
 import localFont from 'next/font/local'
 
-import NextAuthProvider from '@/components/auth/next-auth-provider'
+import NextAuthProvider from '@/components/next-auth-provider'
 import { Toaster } from '@/components/ui/sonner'
 import { auth } from '@/lib/auth'
 

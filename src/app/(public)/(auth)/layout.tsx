@@ -1,5 +1,6 @@
-import AuthPageBanner from '@/components/auth/page-banner'
 import BlueHeader from '@/components/blue-header'
+
+import AuthPageBanner from './_components/auth-page-banner'
 
 export default function AuthLayout({ children }: React.PropsWithChildren) {
   return (

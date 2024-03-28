@@ -1,6 +1,6 @@
-import FormContainer from '@/components/auth/form-container'
-import DefaultAuthForm from '@/components/auth/form-default'
-import EnterPasswordForm from '@/components/auth/form-enter-password'
+import FormContainer from '../_components/form-container'
+import DefaultAuthForm from '../_components/form-default'
+import EnterPasswordForm from '../_components/form-enter-password'
 
 export default function SignIn({
   searchParams

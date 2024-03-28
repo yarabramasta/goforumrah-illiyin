@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 
-import UserAvatar from './user-avatar'
+import UserAvatar from './dashboard-header-user-avatar'
 
 export default function AccountDropdown() {
   const session = useSession()

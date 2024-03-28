@@ -1,7 +1,7 @@
-import ContactDetailsForm from '@/components/auth/form-contact-details'
-import FormContainer from '@/components/auth/form-container'
-import CreatePasswordForm from '@/components/auth/form-create-password'
-import DefaultAuthForm from '@/components/auth/form-default'
+import ContactDetailsForm from '../_components/form-contact-details'
+import FormContainer from '../_components/form-container'
+import CreatePasswordForm from '../_components/form-create-password'
+import DefaultAuthForm from '../_components/form-default'
 
 export default function SignIn({
   searchParams

@@ -1,19 +1,24 @@
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 export default function DashboardContent({
   title,
-  items,
+  children,
   tabs = [],
   activeTabIndex = 0
-}: {
+}: React.PropsWithChildren<{
   title: string
   tabs?: { title: string; count?: number }[]
-  items: any[]
   activeTabIndex?: number
-}) {
+}>) {
   return (
     <section>
-      <h1 className="text-3xl font-semibold">{title}</h1>
+      <div className="flex w-full items-center justify-between">
+        <h1 className="mr-2 text-3xl font-semibold">{title}</h1>
+        <Button variant="outline" size="sm" className="border-primary">
+          See all reservations
+        </Button>
+      </div>
       {!!tabs.length ? (
         <div className="my-4 flex h-14 w-full flex-row gap-2 border-b md:w-fit">
           {tabs.map((tab, index) => (
@@ -36,7 +41,7 @@ export default function DashboardContent({
           ))}
         </div>
       ) : null}
-      <ul>{!!items.length ? <li>item</li> : null}</ul>
+      {children}
     </section>
   )
 }
