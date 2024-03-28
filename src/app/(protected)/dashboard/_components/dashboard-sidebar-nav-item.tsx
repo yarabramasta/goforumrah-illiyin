@@ -17,6 +17,7 @@ interface DashboardSidebarNavItemProps {
   title: string
   href: string
   icon: React.ReactNode
+  disabled?: boolean
 }
 
 export default function DashboardSidebarNavItem(
@@ -31,6 +32,7 @@ export default function DashboardSidebarNavItem(
         'w-full justify-start',
         pathname === props.href && 'bg-accent text-primary hover:text-primary'
       )}
+      disabled={props.disabled ?? false}
       asChild
     >
       <Link href={props.href} prefetch={false}>
@@ -45,31 +47,37 @@ export const items: DashboardSidebarNavItemProps[] = [
   {
     title: 'Dashboard',
     href: '/dashboard',
-    icon: <DashboardIcon className="mr-2 h-5 w-5" />
+    icon: <DashboardIcon className="mr-2 h-5 w-5" />,
+    disabled: false
   },
   {
     title: 'Rates & Availability',
     href: '/dashboard/rates',
-    icon: <Calendar className="mr-2 h-5 w-5" />
+    icon: <Calendar className="mr-2 h-5 w-5" />,
+    disabled: true
   },
   {
     title: 'Reservations',
     href: '/dashboard/reservations',
-    icon: <ClipboardIcon className="mr-2 h-5 w-5" />
+    icon: <ClipboardIcon className="mr-2 h-5 w-5" />,
+    disabled: true
   },
   {
     title: 'Rooms',
     href: '/dashboard/rooms',
-    icon: <Bed className="mr-2 h-5 w-5" />
+    icon: <Bed className="mr-2 h-5 w-5" />,
+    disabled: true
   },
   {
     title: 'Guest Reviews',
     href: '/dashboard/reviews',
-    icon: <StarIcon className="mr-2 h-5 w-5" />
+    icon: <StarIcon className="mr-2 h-5 w-5" />,
+    disabled: true
   },
   {
     title: 'Setting',
     href: '/dashboard/settings',
-    icon: <GearIcon className="mr-2 h-5 w-5" />
+    icon: <GearIcon className="mr-2 h-5 w-5" />,
+    disabled: true
   }
 ]
