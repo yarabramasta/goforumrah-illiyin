@@ -15,7 +15,9 @@ export default function UserAvatar({
   return (
     <Avatar className="aspect-square" style={{ width: size, height: size }}>
       <AvatarImage
-        src="https://api.dicebear.com/8.x/notionists-neutral/svg?seed=Leo"
+        src={`https://api.dicebear.com/8.x/notionists-neutral/svg?seed=${
+          data?.user?.name?.replace(' ', '%20') ?? 'go_for_umrah'
+        }`}
         alt={data?.user?.email ?? ''}
       />
       <AvatarFallback>

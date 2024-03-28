@@ -11,6 +11,8 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 
@@ -32,7 +34,7 @@ export default function AccountDropdown() {
               <UserAvatar {...session} />
             </Button>
           </DropdownMenuTrigger>
-          <Items />
+          <Items data={session.data} />
         </DropdownMenu>
       </div>
       <div className="hidden items-center sm:flex">
@@ -54,18 +56,29 @@ export default function AccountDropdown() {
               <ChevronDownIcon />
             </Button>
           </DropdownMenuTrigger>
-          <Items />
+          <Items data={session.data} />
         </DropdownMenu>
       </div>
     </>
   )
 }
 
-function Items() {
+function Items({ data }: Pick<ReturnType<typeof useSession>, 'data'>) {
   const router = useRouter()
 
   return (
     <DropdownMenuContent className="w-56" align="end" forceMount>
+      <DropdownMenuLabel className="flex font-normal sm:hidden">
+        <div className="flex flex-col space-y-1">
+          <p className="text-sm font-medium leading-none">
+            {data?.user?.name ?? ''}
+          </p>
+          <p className="text-xs leading-none text-muted-foreground">
+            {data?.user?.email ?? ''}
+          </p>
+        </div>
+      </DropdownMenuLabel>
+      <DropdownMenuSeparator className="block sm:hidden" />
       <DropdownMenuGroup>
         <DropdownMenuItem className="flex sm:hidden">
           Notifications
