@@ -27,7 +27,7 @@ export default function DashboardSidebarSheet() {
           <HamburgerMenuIcon />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="max-w-[320px]">
+      <SheetContent side="left" className="max-w-sm">
         <SheetHeader className="border-b">
           <SheetTitle className="h-16">
             <LogoText variant="dark" />
