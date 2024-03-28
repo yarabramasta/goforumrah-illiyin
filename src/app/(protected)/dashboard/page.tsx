@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import AccountDropdown from '@/features/dashboard/components/account-dropdown'
+import DashboardContent from '@/features/dashboard/components/dashboard-content'
 import Drawer from '@/features/dashboard/components/drawer'
 import Sidebar from '@/features/dashboard/components/sidebar'
 import { cn } from '@/lib/utils'
@@ -56,7 +57,7 @@ export default function Dashboard() {
             <div className="sr-only sm:not-sr-only">
               <Button
                 className={cn(
-                  'relative mr-4',
+                  'relative mr-2',
                   "after:absolute after:right-0 after:top-0 after:z-20 after:mr-1.5 after:mt-[10px] after:size-1.5 after:rounded-full after:bg-red-600 after:content-['']"
                 )}
                 size="icon"
@@ -69,7 +70,19 @@ export default function Dashboard() {
           </div>
         </div>
       </header>
-      <div className="relative flex-1 overflow-y-scroll"></div>
+      <div className="relative ml-auto w-full flex-1 overflow-y-scroll p-8 lg:w-[calc(100vw-240px)]">
+        <DashboardContent
+          title="Reservation Overview"
+          items={[]}
+          tabs={[
+            { title: 'Departure' },
+            { title: 'Arrival', count: 1 },
+            { title: 'Stay-over' }
+          ]}
+        />
+        <div className="mt-8"></div>
+        <DashboardContent title="Latest Booking" items={[]} />
+      </div>
     </main>
   )
 }
