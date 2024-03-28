@@ -34,7 +34,7 @@ export function splitter<T>(arr: T[], size: number) {
 }
 
 export const random = {
-  reservation: (size: number) => {
+  reservation: (size: number, rest = { status: false }) => {
     return looper(size, () => {
       const bookingId = randomBytes(4).toString('hex').toUpperCase()
       const name = faker.person.fullName()
@@ -47,6 +47,10 @@ export const random = {
         arrivalDate.getTime() +
           faker.number.int({ min: 0, max: 24 * 3 }) * 60 * 60 * 1000
       )
+      const status: 'Confirmed' | 'Pending' | 'Cancelled' | undefined =
+        rest.status
+          ? faker.helpers.arrayElement(['Confirmed', 'Pending', 'Cancelled'])
+          : undefined
 
       return {
         bookingId,
@@ -56,7 +60,8 @@ export const random = {
         totalBedroom,
         stayDate: `${dayjs(arrivalDate).format('D MMM')} - ${dayjs(departureDate).format('D MMM')}`,
         stayTime: `Arrival ${dayjs(arrivalDate).format('h:mm A')} - Departure ${dayjs(departureDate).format('h:mm A')}`,
-        bookedAt: dayjs(bookedAt).format('D MMM YYYY')
+        bookedAt: dayjs(bookedAt).format('D MMM YYYY'),
+        status
       }
     })
   }

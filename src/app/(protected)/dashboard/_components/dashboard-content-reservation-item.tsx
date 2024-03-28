@@ -21,6 +21,7 @@ export interface ReservationItemProps {
   bookedAt: string
   stayDate: string
   stayTime: string
+  status?: 'Confirmed' | 'Pending' | 'Cancelled'
 }
 
 export default function ReservationItem(
@@ -30,7 +31,10 @@ export default function ReservationItem(
 ) {
   if (props.variant === 'list-item') {
     return (
-      <div className="flex w-full px-4 py-6">
+      <li
+        title={`Reservation by ${props.name}`}
+        className="flex w-full px-4 py-6"
+      >
         <Avatar className="mr-6 size-10 rounded-md border">
           <AvatarImage
             src={`https://api.dicebear.com/8.x/notionists-neutral/svg?seed=${props.name}`}
@@ -63,48 +67,70 @@ export default function ReservationItem(
           <span className="text-lg font-medium leading-tight">
             Total spent: ${props.totalSpent}
           </span>
+          {props.status ? (
+            <div className="flex flex-col">
+              <span className="pb-1 text-xs font-medium text-muted-foreground">
+                Status
+              </span>
+              {props.status === 'Confirmed' ? (
+                <span className="text-sm font-medium text-primary">
+                  Confirmed
+                </span>
+              ) : props.status === 'Pending' ? (
+                <span className="text-sm font-medium text-yellow-500">
+                  Pending
+                </span>
+              ) : (
+                <span className="text-sm font-medium text-red-500">
+                  Cancelled
+                </span>
+              )}
+            </div>
+          ) : null}
           <Link
             href="#"
             className="text-sm font-medium text-primary hover:underline"
           >
-            Detail order
+            See reservation
           </Link>
         </div>
-      </div>
+      </li>
     )
   }
 
   return (
-    <Card>
-      <CardHeader className="pb-2">
-        <CardTitle>
-          <div className="flex flex-col">
-            <span className="mb-1 text-xs font-normal leading-tight text-muted-foreground">
-              #{props.bookingId}
-            </span>
-            <span className="text-primary">{props.name}</span>
+    <li title={`Reservation by ${props.name}`}>
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle>
+            <div className="flex flex-col">
+              <span className="mb-1 text-xs font-normal leading-tight text-muted-foreground">
+                #{props.bookingId} {props.status ? `(${props.status})` : ''}
+              </span>
+              <span className="text-primary">{props.name}</span>
+            </div>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="mb-6 flex w-full flex-col gap-1 text-xs text-gray-800">
+            <div className="flex items-center">
+              <Moon className="mr-1 h-3 w-3" />
+              <span>{props.totalNight} Nights</span>
+            </div>
+            <div className="flex items-center">
+              <DoorClosed className="mr-1 h-3 w-3" />
+              <span>{props.totalBedroom} Bedrooms</span>
+            </div>
           </div>
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="mb-6 flex w-full flex-col gap-1 text-xs text-gray-800">
-          <div className="flex items-center">
-            <Moon className="mr-1 h-3 w-3" />
-            <span>{props.totalNight} Nights</span>
-          </div>
-          <div className="flex items-center">
-            <DoorClosed className="mr-1 h-3 w-3" />
-            <span>{props.totalBedroom} Bedrooms</span>
-          </div>
-        </div>
-        <p className="text-xs leading-tight text-muted-foreground">
-          This reservation was booked at {props.bookedAt} and the stay date is
-          on {props.stayDate} at {props.stayTime}.
-        </p>
-      </CardContent>
-      <CardFooter className="font-medium">
-        Total spent: ${props.totalSpent}
-      </CardFooter>
-    </Card>
+          <p className="text-xs leading-tight text-muted-foreground">
+            This reservation was booked at {props.bookedAt} and the stay date is
+            on {props.stayDate} at {props.stayTime}.
+          </p>
+        </CardContent>
+        <CardFooter className="font-medium">
+          Total spent: ${props.totalSpent}
+        </CardFooter>
+      </Card>
+    </li>
   )
 }

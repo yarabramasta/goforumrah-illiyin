@@ -14,7 +14,7 @@ async function getReservationItems() {
 
 async function getLatestBookingItems() {
   const seed = faker.number.int({ min: 5, max: 5 })
-  return Promise.resolve(random.reservation(seed))
+  return Promise.resolve(random.reservation(seed, { status: true }))
 }
 
 export default async function Dashboard() {
