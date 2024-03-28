@@ -50,8 +50,7 @@ export default function DashboardSidebarSheet() {
               />
             </div>
             <span className="flex-1 text-left">
-              Big Makkah Hotel{' '}
-              <span className="text-muted-foreground">(#10292827)</span>
+              Big Makkah Hotel
             </span>
             <CaretSortIcon className="ml-2" />
           </Button>
