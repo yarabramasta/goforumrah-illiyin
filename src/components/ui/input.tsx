@@ -5,15 +5,19 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
-export type InputProps = React.InputHTMLAttributes<HTMLInputElement>
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  prefixNode: React.ReactNode
+  containerClassName?: string
+}
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
+  ({ className, type, prefixNode, containerClassName, ...props }, ref) => {
     const [showPassword, setShowPassword] = React.useState(false)
     const togglePasswordVisibility = () => setShowPassword(!showPassword)
 
     return (
-      <div className="relative w-full">
+      <div className={cn('relative w-full', containerClassName)}>
+        {prefixNode}
         <input
           type={
             type === 'password' ? (showPassword ? 'text' : 'password') : type

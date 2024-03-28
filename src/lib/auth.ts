@@ -4,8 +4,9 @@
 import NextAuth, { CredentialsSignin } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { cookies } from 'next/headers'
+import { z } from 'zod'
 
-// import { ContactDetailsFormSchema } from '@/features/auth/validations'
+import { ContactDetailsFormSchema } from '@/features/auth/validations'
 
 import { serverFetch } from './api/server-fetch'
 import { ApiResponse, SignUpResponseData } from './api/types'
@@ -78,7 +79,9 @@ async function signUp(data: {
   contactDetails: string
 }) {
   const { contactDetails, ...rest } = data
-  const parsedContactDetails = JSON.parse(contactDetails)
+  const parsedContactDetails = JSON.parse(contactDetails) as z.infer<
+    typeof ContactDetailsFormSchema
+  >
 
   const res = await serverFetch<ApiResponse<SignUpResponseData>>('/store', {
     ...parsedContactDetails,
@@ -97,8 +100,10 @@ async function signUp(data: {
     )
   }
 
+  // this check is to provide if the response is actual user obj
+  // i notice on swagger, if i set status to 0, it will return string (message) instead of user obj
   const user =
-    typeof res.data === 'string'
+    typeof res.data !== 'string'
       ? res.data
       : {
           id_hotel_business: 1,
@@ -107,7 +112,7 @@ async function signUp(data: {
           lastname: parsedContactDetails.lastname
         }
 
-  return serializeUser(user)
+  return serializeUser(user!)
 }
 
 async function signIn(data: { email: string; password: string }) {

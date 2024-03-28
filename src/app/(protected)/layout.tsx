@@ -11,5 +11,5 @@ export default async function PublicLayout({
     redirect('/sign-in')
   }
 
-  return <div className="h-dvh w-screen overflow-x-hidden">{children}</div>
+  return <>{children}</>
 }
