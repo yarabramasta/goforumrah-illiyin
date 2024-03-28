@@ -5,14 +5,28 @@ import { random } from '@/lib/utils'
 import DashboardContent from './_components/dashboard-content'
 import Reservations from './_components/dashboard-content-reservations'
 import DashboardHeader from './_components/dashboard-header'
-import Sidebar from './_components/dashboard-sidebar'
+import DashboardSidebar from './_components/dashboard-sidebar'
+
+async function getReservationItems() {
+  const seed = faker.number.int({ min: 10, max: 20 })
+  return Promise.resolve(random.reservation(seed))
+}
+
+async function getLatestBookingItems() {
+  const seed = faker.number.int({ min: 5, max: 5 })
+  return Promise.resolve(random.reservation(seed))
+}
 
 export default async function Dashboard() {
-  const reservationItems = await getReservationItems()
+  // simulate parallel data fetching
+  const [reservationItems, latestBookingItems] = await Promise.all([
+    getReservationItems(),
+    getLatestBookingItems()
+  ])
 
   return (
     <main className="relative flex h-dvh w-screen flex-col overflow-hidden overflow-x-hidden">
-      <Sidebar />
+      <DashboardSidebar />
       <DashboardHeader />
       <div className="relative ml-auto w-full flex-1 overflow-y-scroll p-8 lg:w-[calc(100vw-240px)]">
         <DashboardContent
@@ -28,13 +42,12 @@ export default async function Dashboard() {
           </ul>
         </DashboardContent>
         <div className="mt-8"></div>
-        <DashboardContent title="Latest Booking" />
+        <DashboardContent title="Latest Booking">
+          <ul className="grid w-full grid-cols-1 flex-col gap-6 sm:grid-cols-2 md:grid-cols-3 lg:flex">
+            <Reservations items={latestBookingItems} />
+          </ul>
+        </DashboardContent>
       </div>
     </main>
   )
-}
-
-async function getReservationItems() {
-  const seed = faker.number.int({ min: 5, max: 20 })
-  return Promise.resolve(random.reservation(seed))
 }

@@ -1,3 +1,5 @@
+'use client'
+
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { Bell } from 'lucide-react'
 import Image from 'next/image'
@@ -8,14 +10,14 @@ import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 
 import AccountDropdown from './dahsboard-header-account-dropdown'
-import Drawer from './dashboard-drawer'
+import DashboardSidebarSheet from './dashboard-sidebar-sheet'
 
 export default function DashboardHeader() {
   return (
     <header className="sticky inset-x-0 top-0 z-50 flex h-20 w-full justify-end border-b">
       <div className="relative flex h-full w-full items-center justify-between px-8 py-[1.25rem] lg:w-[calc(100vw-240px)]">
         <div className=" mr-4 flex items-center">
-          <Drawer />
+          <DashboardSidebarSheet />
           <div className="mr-2 hidden aspect-square h-10 w-10 items-center justify-center overflow-hidden rounded-md lg:flex">
             <Image
               src="/hotel.png"

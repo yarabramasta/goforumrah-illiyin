@@ -28,15 +28,19 @@ export default function Reservations({
   }, [items, width])
 
   if (width > 1024) {
-    return reservations[0].map((item, index) => (
-      <ReservationItem variant="list-item" key={index} {...item} />
+    return reservations[0].map(item => (
+      <li key={item.bookingId} title={`Reservation by ${item.name}`}>
+        <ReservationItem variant="list-item" {...item} />
+      </li>
     ))
   }
 
   return reservations.map((column, index) => (
     <div key={index} className="flex flex-col gap-4">
-      {column.map((item, index) => (
-        <ReservationItem variant="card" key={index} {...item} />
+      {column.map(item => (
+        <li key={item.bookingId} title={`Reservation by ${item.name}`}>
+          <ReservationItem variant="card" {...item} />
+        </li>
       ))}
     </div>
   ))

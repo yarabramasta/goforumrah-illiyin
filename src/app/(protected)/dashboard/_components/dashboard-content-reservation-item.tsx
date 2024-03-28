@@ -7,7 +7,6 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle
@@ -77,29 +76,27 @@ export default function ReservationItem(
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="pb-2">
         <CardTitle>
-          <div className="mb-2 flex flex-col">
+          <div className="flex flex-col">
             <span className="mb-1 text-xs font-normal leading-tight text-muted-foreground">
               #{props.bookingId}
             </span>
             <span className="text-primary">{props.name}</span>
           </div>
         </CardTitle>
-        <CardDescription>
-          <div className="flex w-full flex-col gap-1 text-xs text-gray-800">
-            <div className="flex items-center">
-              <Moon className="mr-1 h-3 w-3" />
-              <span>{props.totalNight} Nights</span>
-            </div>
-            <div className="flex items-center">
-              <DoorClosed className="mr-1 h-3 w-3" />
-              <span>{props.totalBedroom} Bedrooms</span>
-            </div>
-          </div>
-        </CardDescription>
       </CardHeader>
       <CardContent>
+        <div className="mb-6 flex w-full flex-col gap-1 text-xs text-gray-800">
+          <div className="flex items-center">
+            <Moon className="mr-1 h-3 w-3" />
+            <span>{props.totalNight} Nights</span>
+          </div>
+          <div className="flex items-center">
+            <DoorClosed className="mr-1 h-3 w-3" />
+            <span>{props.totalBedroom} Bedrooms</span>
+          </div>
+        </div>
         <p className="text-xs leading-tight text-muted-foreground">
           This reservation was booked at {props.bookedAt} and the stay date is
           on {props.stayDate} at {props.stayTime}.
